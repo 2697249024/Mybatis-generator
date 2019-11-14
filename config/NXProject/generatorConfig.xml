@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- 配置文件需要修改的内容：
+
+数据库驱动、地址、用户名、密码
+POJO类、mapper接口、mapper映射文件生成的位置
+指定数据表
+配置完成之后运行GeneratorSqlmap.java中的main方法就会生成对应数据表的代码，生成后记得右键项目名刷新。如果需要再次生成，一定要记得先把原来生成的删除。
+
+ -->
+
+
+<generatorConfiguration>
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <commentGenerator>
+    	<!-- 是否去除自动生成的注释 -->
+    	<property name="suppressAllComments" value="true"/>
+    </commentGenerator>
+    <!-- Mysql数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+    <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+        connectionURL="jdbc:mysql://10.202.106.100/vehicle_prediction?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;useSSL=false"
+        userId="ops"
+        password="sf456789">
+    </jdbcConnection>
+    <!-- Oracle数据库
+	    <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+	        connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg"
+	        userId="yycg"
+	        password="yycg">
+	    </jdbcConnection> 
+    -->
+	
+	<!-- 默认为false，把JDBC DECIMAL 和NUMERIC类型解析为Integer，为true时
+	把JDBC DECIMAL 和NUMERIC类型解析为java.math.BigDecimal -->
+    <javaTypeResolver >
+		<property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+	
+	<!-- targetProject：生成POJO类的位置 -->
+    <javaModelGenerator targetPackage="com.itheima.mybatis.po" targetProject=".\src">
+		<!-- enableSubPackages:是否让schema作为包的后缀 -->
+		<property name="enableSubPackages" value="false" />
+		<!-- 从数据库返回的值被清理前后的空格 -->
+		<property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    
+	<!-- targetProject：mapper映射文件生成的位置 -->
+    <sqlMapGenerator targetPackage="com.itheima.mybatis.mapper"  targetProject=".\src">
+		<!-- enableSubPackages:是否让schema作为包的后缀 -->
+		<property name="enableSubPackages" value="false" />
+    </sqlMapGenerator>
+    
+	<!-- targetProject：mapper接口生成的的位置 -->
+	<javaClientGenerator type="XMLMAPPER" targetPackage="com.itheima.mybatis.mapper"  targetProject=".\src">
+		<!-- enableSubPackages:是否让schema作为包的后缀 -->
+		<property name="enableSubPackages" value="false" />
+    </javaClientGenerator>
+    
+	<!-- 指定数据表 -->
+	<table schema="" tableName="pass_transittime_out_adjust_result"></table>
+	<table schema="" tableName="pass_transittime_tmp_intermediate_information"></table>
+    <!-- 有些表的字段需要指定java类型 
+    <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" >
+      <property name="useActualColumnNames" value="true"/>
+      <generatedKey column="ID" sqlStatement="DB2" identity="true" />
+      <columnOverride column="DATE_FIELD" property="startDate" />
+      <ignoreColumn column="FRED" />
+      <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
+    </table> -->
+
+  </context>
+</generatorConfiguration>
